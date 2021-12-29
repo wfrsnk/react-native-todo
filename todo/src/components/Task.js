@@ -1,23 +1,24 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 import SwipeOut from 'react-native-swipeout';
+import { connect } from 'react-redux';
+import { deleteTask, setCompleted } from '../redux/actions';
 
 
-const ListItems = ( {el, deleteHandler, completedHandler} ) => {
+const Task = ( {setCompleted, deleteTask, el} ) => {
+
     const swipeOutBtns = [
         {
           text: 'Delete',
           backgroundColor: '#ff0000',
-          onPress: () => deleteHandler(el.key)
+          onPress: () => {deleteTask(el.key)}
         }
       ]
 
   return (
-      
       <SwipeOut  right={swipeOutBtns}>
-        <TouchableOpacity style={styles.container} onPress={() => completedHandler(el.key)}>
-            <Text style={el.completed ? styles.completeText : styles.text}>{el.text}</Text>
-            
+        <TouchableOpacity style={styles.container} onPress={() => setCompleted(el.key)}>
+            <Text style={el.completed ? styles.completeText : styles.text}>{el.text}</Text> 
         </TouchableOpacity>
       </SwipeOut>
   )
@@ -49,4 +50,16 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ListItems
+const mapStateToProps = state => {
+  return {
+    listOfTasks: state.list.tasks
+  };
+}
+
+
+const mapDispatchToProps = {
+  setCompleted: setCompleted,
+  deleteTask: deleteTask
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Task)

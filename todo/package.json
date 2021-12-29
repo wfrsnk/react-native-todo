@@ -13,7 +13,9 @@
     "react": "17.0.2",
     "react-native": "0.66.4",
     "react-native-swipeout": "^2.3.6",
-    "react-native-uuid": "^2.0.1"
+    "react-native-uuid": "^2.0.1",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

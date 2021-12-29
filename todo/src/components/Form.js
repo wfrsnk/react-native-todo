@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, TouchableOpacity, TextInput, View } from 'react-native';
+import { connect } from 'react-redux';
+import { createTask } from '../redux/actions';
+import uuid from 'react-native-uuid';
 
-const Form = ({addHandler}) => {
+const Form = ({createTask, listOfTasks}) => {
 
-    const inputMaxLength = 5;
+    const inputMaxLength = 10;
     const [text, setTextValue] = useState('');
     const [inputBorder, setInputBorder] = useState(false);
 
@@ -17,6 +20,29 @@ const Form = ({addHandler}) => {
         setTextValue(text);
     }
 
+    const hasDuplicate = (text) =>{
+        let flag = false;
+        listOfTasks.forEach((el)=> {
+            if(el.text === text)
+                flag = true;
+        })
+        return flag;
+    }
+
+    const createNewTask = (text) =>{
+        const isDuplicate = hasDuplicate(text)
+        if(!isDuplicate) {
+            const newTask = {text: text, key: uuid.v4(), completed: false};
+            createTask(newTask);
+            setTextValue('');
+        } else {
+            setInputBorder(true);
+            warning();
+        }
+            
+
+    }
+
   return (
     <View style = {styles.Form}>
         <View style={styles.container}>
@@ -25,8 +51,7 @@ const Form = ({addHandler}) => {
             style={styles.button}
             onPress={() => {
                 if(text.length <= inputMaxLength && text != '') {
-                    addHandler(text);
-                    setTextValue('');
+                    createNewTask(text);
                 } else {
                     setInputBorder(true)
                     warning();
@@ -72,7 +97,6 @@ const styles = StyleSheet.create({
         padding: 10,
     },
 
-
     button: {
         backgroundColor: '#BEFCE5',
         marginRight: 20,
@@ -95,4 +119,14 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Form 
+const mapDispatchToProps = {
+    createTask: createTask
+}
+
+const mapStateToProps = state => {
+    return {
+      listOfTasks: state.list.tasks,
+    };
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form) 

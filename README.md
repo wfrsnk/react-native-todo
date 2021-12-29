@@ -29,9 +29,9 @@
 ---
 ## Результат:
 
-![image](./img_1.png)
+<img src="./img_1.png" style="width:300px;"/>
 
-![image](./img_2.png)
+<img src="./img_2.png" style="width:300px;"/>
 
 ## Инструкция по запуску на macOS:
 

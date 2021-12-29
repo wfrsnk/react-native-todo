@@ -28,10 +28,11 @@
 - Использование хранилища (Redux).
 ---
 ## Результат:
+<div style="display:flex;">
+<img src="./img_1.png" style="width:350px;"/>
+<img src="./img_2.png" style="width:350px;"/>
+</div>
 
-<img src="./img_1.png" style="width:300px;"/>
-
-<img src="./img_2.png" style="width:300px;"/>
 
 ## Инструкция по запуску на macOS:
 
